@@ -31,9 +31,20 @@ function echo(argArr) {
   process.stdout.write('\nprompt > ');
 }
 
+function cat(files) {
+  files.forEach(function(file) {
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) throw err;
+      else console.log(data);
+      process.stdout.write('prompt > ');
+    });
+  });
+}
+
 module.exports = {
   pwd: pwd,
   date: date,
   ls: ls,
-  echo: echo
+  echo: echo,
+  cat: cat
 };

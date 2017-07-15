@@ -7,6 +7,8 @@ process.stdout.write('prompt > ');
 process.stdin.on('data', function(data) {
   var cmd = data.toString().trim().split(' '); // remove the newline
   var fn = cmd[0],
-    file = cmd.slice(1);
-  commands[fn](file);
+    filename = cmd.slice(1);
+
+  if (fn) commands[fn](filename);
+  else process.stdout.write('prompt > ');
 });
