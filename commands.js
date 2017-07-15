@@ -1,16 +1,18 @@
 var fs = require('fs');
 
 function pwd() {
-  process.stdout.write('\n' + process.cwd());
+  process.stdout.write(process.cwd());
+  process.stdout.write('\nprompt > ');
 }
 
 function date() {
-  process.stdout.write('\n' + Date().toString());
+  process.stdout.write(Date().toString());
+  process.stdout.write('\nprompt > ');
 }
 
 function ls() {
   fs.readdir('.', function(err, files) {
-    if(err) throw err;
+    if (err) throw err;
     files.forEach(function(file) {
       process.stdout.write(file.toString() + '\n');
     });
@@ -18,8 +20,20 @@ function ls() {
   });
 }
 
+function echo(argArr) {
+  if (argArr[0] == '$PATH') {
+    process.stdout.write(process.env.PATH);
+    process.stdout.write(' ' + argArr.slice(1).join(' '));
+  }
+  else {
+    process.stdout.write(argArr.join(' '));
+  }
+  process.stdout.write('\nprompt > ');
+}
+
 module.exports = {
   pwd: pwd,
   date: date,
-  ls: ls
+  ls: ls,
+  echo: echo
 };
