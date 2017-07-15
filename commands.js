@@ -1,4 +1,5 @@
 var fs = require('fs');
+var request = require('request');
 
 function pwd() {
   process.stdout.write(process.cwd());
