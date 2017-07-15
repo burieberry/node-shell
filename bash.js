@@ -10,6 +10,7 @@ process.stdin.on('data', function(data) {
 
   if (cmd === 'pwd') commands.pwd();
   if (cmd === 'date') commands.date();
+  if (cmd === 'ls') commands.ls();
 
   process.stdout.write('\nprompt > ');
 });
