@@ -35,8 +35,34 @@ function cat(files) {
   files.forEach(function(file) {
     fs.readFile(file, 'utf8', function(err, data) {
       if (err) throw err;
-      else console.log(data);
+      else process.stdout.write(data);
       process.stdout.write('prompt > ');
+    });
+  });
+}
+
+function head(files) {
+  var _numLines = 5;
+  files.forEach(function(file) {
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) throw err;
+      else {
+        process.stdout.write(data.split('\n').slice(0, _numLines).join('\n'));
+        process.stdout.write('\nprompt > ');
+      }
+    });
+  });
+}
+
+function tail(files) {
+  var _numLines = -5;
+  files.forEach(function(file) {
+    fs.readFile(file, 'utf8', function(err, data) {
+      if (err) throw err;
+      else {
+        process.stdout.write(data.split('\n').slice(_numLines).join('\n'));
+        process.stdout.write('\nprompt > ');
+      }
     });
   });
 }
@@ -46,5 +72,7 @@ module.exports = {
   date: date,
   ls: ls,
   echo: echo,
-  cat: cat
+  cat: cat,
+  head: head,
+  tail: tail
 };
