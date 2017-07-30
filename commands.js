@@ -1,15 +1,15 @@
 var fs = require('fs');
 var request = require('request');
 
-function pwd(filename, done) {
+function pwd(stdin, filename, done) {
   done(process.cwd() + '\n');
 }
 
-function date(filename, done) {
+function date(stdin, filename, done) {
   done(Date().toString() + '\n');
 }
 
-function ls(filename, done) {
+function ls(stdin, filename, done) {
   var output = '';
   fs.readdir('.', function(err, files) {
     if (err) throw err;
@@ -20,14 +20,14 @@ function ls(filename, done) {
   });
 }
 
-function echo(filename, done) {
+function echo(stdin, filename, done) {
   if (filename[0] === '$PATH')
     done(process.env.PATH + ' ' + filename.slice(1).join(' ') + '\n');
   else
     done(filename.join(' ') + '\n');
 }
 
-function cat(filename, done) {
+function cat(stdin, filename, done) {
   filename.forEach(function(file) {
     fs.readFile(file, 'utf8', function(err, data) {
       if (err) throw err;
@@ -36,8 +36,9 @@ function cat(filename, done) {
   });
 }
 
-function head(filename, done) {
+function head(stdin, filename, done) {
   var _numLines = 5;
+
   filename.forEach(function(file) {
     fs.readFile(file, 'utf8', function(err, data) {
       if (err) throw err;
@@ -46,8 +47,9 @@ function head(filename, done) {
   });
 }
 
-function tail(filename, done) {
+function tail(stdin, filename, done) {
   var _numLines = -5;
+
   filename.forEach(function(file) {
     fs.readFile(file, 'utf8', function(err, data) {
       if (err) throw err;
@@ -56,7 +58,7 @@ function tail(filename, done) {
   });
 }
 
-function curl(filename, done) {
+function curl(stdin, filename, done) {
   request(filename[0], function (error, response, body) {
   done('error:' + error + '\n' +
        // Print the error if one occurred
